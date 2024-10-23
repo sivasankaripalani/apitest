@@ -29,7 +29,10 @@ jobs:
       - name: create zip
         run: zip -qq -r test.zip .
 
-      - name: List Directory
+      - name: unzip Directory
+        run: unzip -qq test.zip
+      
+      - name: Directory
         run: ls test
 
 
