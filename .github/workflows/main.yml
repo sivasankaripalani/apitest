@@ -30,10 +30,10 @@ jobs:
         run: zip -qq -r test.zip .
 
       - name: unzip Directory
-        run: unzip -qq test.zip
+        run: unzip -qq test.zip -d static
       
       - name: Directory
-        run: ls test
+        run: ls static
 
 
         # run: |
