@@ -27,16 +27,17 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: create zip
-        run: |
-          if [ ! -d "content" ]; then
-           echo "the content directory not exist"
-           exit 1
-          fi
-          for dir in content/*/;
-          do 
-          dir_name=$(basename "$dir")
-          zip -r "${dir_name}.zip" "$dir"
-          done
+        run: zip -qq -r test.zip .
+        # run: |
+        #   if [ ! -d "content" ]; then
+        #    echo "the content directory not exist"
+        #    exit 1
+        #   fi
+        #   for dir in content/*/;
+        #   do 
+        #   dir_name=$(basename "$dir")
+        #   zip -r "${dir_name}.zip" "$dir"
+        #   done
 
 
 
