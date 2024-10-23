@@ -44,7 +44,7 @@ jobs:
           for dir in content/*/;
           do 
           dir_name=$(basename "$dir")
-          echo dir_name
+          echo ${dir_name}
           zip -r "${dir_name}.zip" "$dir"
           done
 
