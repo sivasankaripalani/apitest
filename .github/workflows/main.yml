@@ -16,7 +16,7 @@ on:
       environment:
         type: environment
         description: select the environment
-        default: main
+        default: feature
         required: true
   env:
     CHROME_CONTAINER_NAME: "chrome-github-actions-$GITHUB_RUN_ID"
@@ -27,6 +27,7 @@ jobs:
   portal:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
