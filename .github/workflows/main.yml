@@ -18,6 +18,8 @@ on:
         description: select the environment
         default: main
         required: true
+  env:
+    CHROME_CONTAINER_NAME: "chrome-github-actions-$GITHUB_RUN_ID"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
