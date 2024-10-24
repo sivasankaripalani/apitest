@@ -28,26 +28,29 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: create zip
-      #   run: zip -qq -r test.zip .
+        run: zip -qq -r test.zip .
 
-      # - name: unzip Directory
-      #   run: unzip -qq test.zip -d static
+      - name: unzip Directory
+        run: unzip -qq test.zip -d static
+
+      - name: List Directory
+        run: ls static
       
       # - name: Directory
       #   run: ls static
 
 
-        run: |
-          if [ ! -d "content" ]; then
-           echo "the content directory not exist"
-           exit 1
-          fi
-          for dir in content/*/;
-          do 
-          dir_name=$(basename "$dir")
-          echo ${dir_name}
-          zip -r "${dir_name}.zip" "$dir"
-          done
+        # run: |
+        #   if [ ! -d "content" ]; then
+        #    echo "the content directory not exist"
+        #    exit 1
+        #   fi
+        #   for dir in content/*/;
+        #   do 
+        #   dir_name=$(basename "$dir")
+        #   echo ${dir_name}
+        #   zip -qq -r "${dir_name}.zip" "$dir"
+        #   done
 
 
 
