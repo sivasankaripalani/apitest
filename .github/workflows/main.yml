@@ -29,17 +29,18 @@ jobs:
       # Runs a single command using the runners shell
       - name: create zip
         run: |
+          SPECIFIC_FILE="new.json"
           if [ ! -d "base" ]; then
            echo "the base directory not exist"
            exit 1
           fi
-          for dir in base/*/;
-          do 
-          dir_name=$(basename "$dir")
-          echo ${dir_name}
-          zip -qq -r "${dir_name}.zip" "$dir"
-          unzip -qq ${dir_name}.zip -d static
-          ls static
+          for dir in base/*/; do
+            if[ -f "$dir/$SPECIFIC_FILE" ]; then
+              folder_name = $(basename "$dir")
+              echo ${dir_name}
+              zip -qq -r "${folder_name}.zip" "$dir"
+              unzip -qq ${folder_name}.zip -d static
+              ls static
           done
         # run: zip -qq -r test.zip .
 
