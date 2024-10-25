@@ -27,20 +27,31 @@ jobs:
         uses: actions/checkout@v4
 
       
+      - name: Zip Contents of Given Directory
+        run: |
+          TARGET_DIR="base/exp/api/version"  # Specify your target directory
+          ZIP_NAME="version_archive.zip"  # Name for the zip file
 
+          echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
+
+          # Change to the target directory and zip its contents
+          cd "$TARGET_DIR"
+          zip -r "../../$ZIP_NAME" ./*  # Zip contents and place it in the base directory
+
+          echo "Created zip file: $ZIP_NAME"
      
 
-      - name: Find Relative Directory Paths of Specific File perfectly  working code 
-        run: |
-          BASE_DIR="base"  # Change this to your base directory
-          SPECIFIC_FILE="new.json"  # Change this to your specific file name
+      # - name: Find Relative Directory Paths of Specific File perfectly  working code 
+      #   run: |
+      #     BASE_DIR="base"  # Change this to your base directory
+      #     SPECIFIC_FILE="new.json"  # Change this to your specific file name
 
-          echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
+      #     echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
 
-          # Use find to search for the specific file and print its directory paths
-          find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u | while read DIR_PATH; do
-            echo "Found directory path: $DIR_PATH"
-          done
+      #     # Use find to search for the specific file and print its directory paths
+      #     find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u | while read DIR_PATH; do
+      #       echo "Found directory path: $DIR_PATH"
+      #     done
 
       # - name: Get Recently Modified Directories
       #   id: get_modified_dirs
