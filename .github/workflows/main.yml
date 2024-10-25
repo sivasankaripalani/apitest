@@ -31,7 +31,7 @@ jobs:
       - name: Find Relative Path of Specified File
         run: |
           BASE_DIR="base"  # Change this to your base directory
-          SPECIFIC_FILE="targetfile.txt"  # Change this to your specific file name
+          SPECIFIC_FILE="new.json"  # Change this to your specific file name
 
           echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
 
