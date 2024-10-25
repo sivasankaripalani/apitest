@@ -36,9 +36,36 @@ jobs:
           echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
 
           # Use find to search for the specific file and print its directory paths
-          find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u | while read DIR_PATH; do
-            echo "Found directory path: $DIR_PATH"
-          done
+          DIR_PATHS=$(find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u)
+
+          if [ -z "$DIR_PATHS" ]; then
+            echo "No directories found containing '$SPECIFIC_FILE'."
+            echo "DIR_PATHS=" >> $GITHUB_ENV  # Set an empty env variable
+          else
+            echo "Found directories:"
+            echo "$DIR_PATHS" | while read -r DIR_PATH; do
+              echo "Directory path: $DIR_PATH"
+              # Zip the specific file in each directory
+              ZIP_NAME="$(basename "$DIR_PATH").zip"
+              zip -qq -r "$ZIP_NAME" "$DIR_PATH"
+              echo "Created zip file: $ZIP_NAME"
+              unzip -qq "$ZIP_NAME" -d static-portal
+              ls static-portal
+            done
+            echo "DIR_PATHS=$DIR_PATHS" >> $GITHUB_ENV  # Set the found paths in env variable
+          fi
+
+      # - name: Find Relative Directory Paths of Specific File perfectly  working code 
+      #   run: |
+      #     BASE_DIR="base"  # Change this to your base directory
+      #     SPECIFIC_FILE="new.json"  # Change this to your specific file name
+
+      #     echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
+
+      #     # Use find to search for the specific file and print its directory paths
+      #     find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u | while read DIR_PATH; do
+      #       echo "Found directory path: $DIR_PATH"
+      #     done
 
       # - name: Get Recently Modified Directories
       #   id: get_modified_dirs
