@@ -37,10 +37,19 @@ jobs:
           # Change to the target directory and zip its contents
           cd "$TARGET_DIR"
           zip -r "../../$ZIP_NAME" ./*  # Zip contents and place it in the base directory
-          unzip "../../$ZIP_NAME" ./* -d static-portal
-          echo "unzip ls"
-          ls static-portal
+         
           echo "Created zip file: $ZIP_NAME"
+
+          ZIP_PATH="../version_archive.zip"  # Path to the zip file
+          UNZIP_DIR="unzipped_version"  # Directory to unzip into
+
+          echo "Unzipping '$ZIP_PATH' into '$UNZIP_DIR'..."
+
+          mkdir -p "$UNZIP_DIR"  # Create the unzip directory if it doesn't exist
+          unzip -o "$ZIP_PATH" -d "$UNZIP_DIR"  # Unzip the file into the specified directory
+
+          echo "Unzipped contents:"
+          ls "$UNZIP_DIR"  # List the contents of the unzipped directory
      
 
       # - name: Find Relative Directory Paths of Specific File perfectly  working code 
