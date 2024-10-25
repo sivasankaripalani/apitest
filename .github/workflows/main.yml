@@ -37,9 +37,8 @@ jobs:
           # Change to the target directory and zip its contents
           cd "$TARGET_DIR"
           zip -r "../../$ZIP_NAME" ./*  # Zip contents and place it in the base directory
-          cd base
-          unzip version_archive.zip -d static-portal
-          ls static-portal
+          
+          ls base
           echo "Created zip file: $ZIP_NAME"
 
 
