@@ -36,7 +36,7 @@ jobs:
 
           # Change to the target directory and zip its contents
           cd "$TARGET_DIR"
-          zip -r "$TARGET_DIR/$ZIP_NAME" ./*  # Zip contents and place it in the base directory
+          zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the base directory
           echo "Created zip file: $ZIP_NAME"
 
       - name: Find and Unzip version_archive.zip
