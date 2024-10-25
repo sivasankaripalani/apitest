@@ -40,6 +40,9 @@ jobs:
          
           echo "Created zip file: $ZIP_NAME"
 
+
+      - name: Unzip the Zipped File
+        run: |
           ZIP_PATH="../version_archive.zip"  # Path to the zip file
           UNZIP_DIR="unzipped_version"  # Directory to unzip into
 
