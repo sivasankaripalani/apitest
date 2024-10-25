@@ -30,7 +30,7 @@ jobs:
       - name: Zip Contents of Given Directory
         run: |
           TARGET_DIR="base/exp/api/version"  # Specify your target directory
-          ZIP_NAME="version_archive.zip"  # Name for the zip file
+          ZIP_NAME="portal.zip"  # Name for the zip file
 
           echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
 
@@ -38,27 +38,30 @@ jobs:
           cd "$TARGET_DIR"
           zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the base directory
           echo "Created zip file: $ZIP_NAME"
+          echo "unzip"
+          unzip -o "$TARGET_DIR/$ZIPNAME" -d "static-portal"
+          ls static-portal
 
-      - name: Find and Unzip version_archive.zip
-        run: |
-          # Find the zipped file
-          ZIP_FILE=$(find . -name "version_archive.zip" -print -quit)  # Adjust the filename as necessary
+      # - name: Find and Unzip version_archive.zip
+      #   run: |
+      #     # Find the zipped file
+      #     ZIP_FILE=$(find . -name "version_archive.zip" -print -quit)  # Adjust the filename as necessary
           
-          if [ -z "$ZIP_FILE" ]; then
-            echo "No zip file found."
-            exit 1  # Exit if the zip file is not found
-          fi
+      #     if [ -z "$ZIP_FILE" ]; then
+      #       echo "No zip file found."
+      #       exit 1  # Exit if the zip file is not found
+      #     fi
 
-          echo "Found zip file at: $ZIP_FILE"
+      #     echo "Found zip file at: $ZIP_FILE"
 
-          UNZIP_DIR="unzipped_version"  # Directory to unzip into
-          echo "Unzipping '$ZIP_FILE' into '$UNZIP_DIR'..."
+      #     UNZIP_DIR="unzipped_version"  # Directory to unzip into
+      #     echo "Unzipping '$ZIP_FILE' into '$UNZIP_DIR'..."
 
-          mkdir -p "$UNZIP_DIR"  # Create the unzip directory if it doesn't exist
-          unzip -o "$ZIP_FILE" -d "$UNZIP_DIR"  # Unzip the file into the specified directory
+      #     mkdir -p "$UNZIP_DIR"  # Create the unzip directory if it doesn't exist
+      #     unzip -o "$ZIP_FILE" -d "$UNZIP_DIR"  # Unzip the file into the specified directory
 
-          echo "Unzipped contents:"
-          ls "$UNZIP_DIR"  # List the contents of the unzipped directory
+      #     echo "Unzipped contents:"
+      #     ls "$UNZIP_DIR"  # List the contents of the unzipped directory
 
 
     
