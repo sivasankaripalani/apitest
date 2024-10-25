@@ -47,9 +47,9 @@ jobs:
               echo "Directory path: $DIR_PATH"
               # Zip the specific file in each directory
               ZIP_NAME="$(basename "$DIR_PATH").zip"
-              zip -qq -r "$ZIP_NAME" "$DIR_PATH"
+              zip -r "$ZIP_NAME" "$DIR_PATH"
               echo "Created zip file: $ZIP_NAME"
-              unzip -qq "$ZIP_NAME" -d static-portal
+              unzip "$ZIP_NAME" -d static-portal
               ls static-portal
             done
           fi
