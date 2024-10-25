@@ -27,21 +27,32 @@ jobs:
         uses: actions/checkout@v4
 
       # Runs a single command using the runners shell
-      - name: create zip
+
+      - name: List All Directories
         run: |
-          SPECIFIC_FILE="new.json"
-          if [ ! -d "base" ]; then
-           echo "the base directory not exist"
-           exit 1
-          fi
-          for dir in base/*/; do
-            if[ -f "$dir/$SPECIFIC_FILE" ]; then
-              folder_name = $(basename "$dir")
-              echo ${dir_name}
-              zip -qq -r "${folder_name}.zip" "$dir"
-              unzip -qq ${folder_name}.zip -d static
-              ls static
+          BASE_DIR="base"  # Change this to your base directory
+
+          echo "Listing all directories under $BASE_DIR:"
+          find "$BASE_DIR" -type d | while read -r DIR; do
+            echo "Directory: $DIR"
           done
+
+      # - name: create zip
+      #   run: |
+      #     SPECIFIC_FILE="new.json"
+      #     if [ ! -d "base" ]; then
+      #      echo "the base directory not exist"
+      #      exit 1
+      #     fi
+      #     for dir in base/*/; do
+      #       if[ -f "$dir/$SPECIFIC_FILE" ]; then
+      #         folder_name = $(basename "$dir")
+      #         echo ${dir_name}
+      #         zip -qq -r "${folder_name}.zip" "$dir"
+      #         unzip -qq ${folder_name}.zip -d static
+      #         ls static
+      #     done
+
         # run: zip -qq -r test.zip .
 
       # - name: unzip Directory
