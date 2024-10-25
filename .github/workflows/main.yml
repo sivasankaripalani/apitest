@@ -28,14 +28,22 @@ jobs:
 
       # Runs a single command using the runners shell
 
-      - name: List All Directories
+      - name: Get Relative Paths of Directories
         run: |
           BASE_DIR="base"  # Change this to your base directory
 
+          # Find all directories under the base directory and print relative paths
           echo "Listing all directories under $BASE_DIR:"
-          find "$BASE_DIR" -type d | while read -r DIR; do
-            echo "Directory: $DIR"
-          done
+          find "$BASE_DIR" -type d -exec bash -c 'for dir; do echo "${dir#./}"; done' _ {} +
+
+      # - name: List All Directories
+      #   run: |
+      #     BASE_DIR="base"  # Change this to your base directory
+
+      #     echo "Listing all directories under $BASE_DIR:"
+      #     find "$BASE_DIR" -type d | while read -r DIR; do
+      #       echo "Directory: $DIR"
+      #     done
 
       # - name: create zip
       #   run: |
