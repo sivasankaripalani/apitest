@@ -26,49 +26,51 @@ jobs:
       - name : checkout
         uses: actions/checkout@v4
 
-      - name: Get Recently Modified Directories
-        id: get_modified_dirs
-        run: |
-          # Get the list of modified files in the latest commit
-          MODIFIED_FILES=$(git diff --name-only HEAD^ HEAD)
+      
 
-          # Extract unique directory paths from modified files
-          MODIFIED_DIRS=$(echo "$MODIFIED_FILES" | grep '/' | sed 's|/[^/]*$||' | sort -u)
-
-          echo "Modified directories:"
-          echo "$MODIFIED_DIRS"
-
-          # Store modified directories in an environment variable
-          echo "MODIFIED_DIRS<<EOF" >> $GITHUB_ENV
-          echo "$MODIFIED_DIRS" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Find Relative Directory Paths of Specific File
+      - name: Find Relative Directory Paths of Specific File perfectly  working code 
         run: |
           BASE_DIR="base"  # Change this to your base directory
           SPECIFIC_FILE="new.json"  # Change this to your specific file name
 
-          echo "Searching for '$SPECIFIC_FILE' in modified directories under '$BASE_DIR':"
+          echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
 
-          # Iterate through modified directories and check for the specific file
-          while IFS= read -r DIR_PATH; do
-            if [ -f "$BASE_DIR/$DIR_PATH/$SPECIFIC_FILE" ]; then
-              echo "Found '$SPECIFIC_FILE' in directory: $DIR_PATH"
-            fi
-          done <<< "$MODIFIED_DIRS"
+          # Use find to search for the specific file and print its directory paths
+          find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sed "s|^$BASE_DIR/||" | sort -u | while read DIR_PATH; do
+            echo "Found directory path: $DIR_PATH"
+          done
 
+      # - name: Get Recently Modified Directories
+      #   id: get_modified_dirs
+      #   run: |
+      #     # Get the list of modified files in the latest commit
+      #     MODIFIED_FILES=$(git diff --name-only HEAD^ HEAD)
 
-      # - name: Find Relative Directory Paths of Specific File perfectly  working code 
+      #     # Extract unique directory paths from modified files
+      #     MODIFIED_DIRS=$(echo "$MODIFIED_FILES" | grep '/' | sed 's|/[^/]*$||' | sort -u)
+
+      #     echo "Modified directories:"
+      #     echo "$MODIFIED_DIRS"
+
+      #     # Store modified directories in an environment variable
+      #     echo "MODIFIED_DIRS<<EOF" >> $GITHUB_ENV
+      #     echo "$MODIFIED_DIRS" >> $GITHUB_ENV
+      #     echo "EOF" >> $GITHUB_ENV
+
+      # - name: Find Relative Directory Paths of Specific File
       #   run: |
       #     BASE_DIR="base"  # Change this to your base directory
       #     SPECIFIC_FILE="new.json"  # Change this to your specific file name
 
-      #     echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
+      #     echo "Searching for '$SPECIFIC_FILE' in modified directories under '$BASE_DIR':"
 
-      #     # Use find to search for the specific file and print its directory paths
-      #     find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sed "s|^$BASE_DIR/||" | sort -u | while read DIR_PATH; do
-      #       echo "Found directory path: $DIR_PATH"
-      #     done
+      #     # Iterate through modified directories and check for the specific file
+      #     while IFS= read -r DIR_PATH; do
+      #       if [ -f "$BASE_DIR/$DIR_PATH/$SPECIFIC_FILE" ]; then
+      #         echo "Found '$SPECIFIC_FILE' in directory: $DIR_PATH"
+      #       fi
+      #     done <<< "$MODIFIED_DIRS"
+
 
       # Runs a single command using the runners shell
       # - name: Find Directory Path of Specified File
