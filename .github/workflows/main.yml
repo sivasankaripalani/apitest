@@ -52,7 +52,6 @@ jobs:
               unzip -qq "$ZIP_NAME" -d static-portal
               ls static-portal
             done
-            echo "DIR_PATHS=$DIR_PATHS" >> $GITHUB_ENV  # Set the found paths in env variable
           fi
 
       # - name: Find Relative Directory Paths of Specific File perfectly  working code 
