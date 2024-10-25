@@ -28,19 +28,35 @@ jobs:
 
       # Runs a single command using the runners shell
 
-      - name: Get Relative Paths of Directories Excluding Last Level
+      - name: Find Paths Relative to Specific File
         run: |
-          BASE_DIR="base"  # Change this to your base directory
-
-          echo "Listing directories under $BASE_DIR excluding the last level:"
+          SPECIFIC_FILE="new.json"  # Change this to your specific file
           
-          # Find directories and exclude the last level
-          find "$BASE_DIR" -type d | awk -F/ '{
-            if (NF > 2) {
-              $NF = "";  # Remove the last part
-              print $0;  # Print the remaining path
-            }
-          }' | sort -u | sed 's|/*$||'  # Remove trailing slashes
+          if [ -f "$SPECIFIC_FILE" ]; then
+            echo "Finding paths relative to $SPECIFIC_FILE"
+            
+            # Get the directory of the specific file
+            DIR_PATH=$(dirname "$SPECIFIC_FILE")
+
+            # Find all directories relative to the specific file's directory
+            find "$DIR_PATH" -type d | sed "s|^$DIR_PATH/||"  # Remove the base path to get relative paths
+          else
+            echo "File $SPECIFIC_FILE does not exist."
+          fi
+
+      # - name: Get Relative Paths of Directories Excluding Last Level
+      #   run: |
+      #     BASE_DIR="base"  # Change this to your base directory
+
+      #     echo "Listing directories under $BASE_DIR excluding the last level:"
+          
+      #     # Find directories and exclude the last level
+      #     find "$BASE_DIR" -type d | awk -F/ '{
+      #       if (NF > 2) {
+      #         $NF = "";  # Remove the last part
+      #         print $0;  # Print the remaining path
+      #       }
+      #     }' | sort -u | sed 's|/*$||'  # Remove trailing slashes
 
       # - name: Get Relative Paths of Directories
       #   run: |
