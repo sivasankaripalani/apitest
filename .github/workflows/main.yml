@@ -35,7 +35,7 @@ jobs:
           echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
 
           # Use find to search for the specific file and print its directory path
-          FILE_PATH=$(find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" | head -n 1)
+          FILE_PATH=$(find "$BASE_DIR" -type f -name "$SPECIFIC_FILE")
 
           if [ -z "$FILE_PATH" ]; then
             echo "File '$SPECIFIC_FILE' not found in '$BASE_DIR'."
