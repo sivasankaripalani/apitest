@@ -29,18 +29,28 @@ jobs:
       
       - name: Zip Contents of Given Directory
         run: |
-          TARGET_DIR="base/exp/api/version"  # Specify your target directory
-          ZIP_NAME="portal.zip"  # Name for the zip file
+          BASE_DIR="base"  # Change this to your base directory
+          SPECIFIC_FILE="new.json"  # Change this to your specific file name
 
-          echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
+          echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
 
-          # Change to the target directory and zip its contents
-          cd "$TARGET_DIR"
-          zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the base directory
-          echo "Created zip file: $ZIP_NAME"
-          echo "unzip"
-          unzip -o "$ZIP_NAME" -d "static-portal"
-          ls static-portal
+          # Use find to search for the specific file and print its directory paths
+          find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u | while read DIR_PATH; do
+            echo "Found directory path: $DIR_PATH"
+            TARGET_DIR=$DIR_PATH
+            ZIP_NAME="portal.zip"  # Name for the zip file
+
+            echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
+
+            # Change to the target directory and zip its contents
+            cd "$TARGET_DIR"
+            zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the base directory
+            echo "Created zip file: $ZIP_NAME"
+            echo "unzip"
+            unzip -o "$ZIP_NAME" -d "static-portal"
+            ls static-portal
+            done
+          
 
       # - name: Find and Unzip version_archive.zip
       #   run: |
