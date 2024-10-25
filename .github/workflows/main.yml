@@ -27,22 +27,43 @@ jobs:
         uses: actions/checkout@v4
 
       # Runs a single command using the runners shell
-
-      - name: Find Relative Path of Specified File
+      - name: Find Directory Path of Specified File
         run: |
           BASE_DIR="base"  # Change this to your base directory
           SPECIFIC_FILE="new.json"  # Change this to your specific file name
 
           echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
 
+          # Use find to search for the specific file and print its directory path
+          FILE_PATH=$(find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" | head -n 1)
+
+          if [ -z "$FILE_PATH" ]; then
+            echo "File '$SPECIFIC_FILE' not found in '$BASE_DIR'."
+          else
+            echo "Found file at: $FILE_PATH"
+            
+            # Get the directory path from the full file path
+            DIR_PATH=$(dirname "$FILE_PATH")
+            echo "Directory Path: $DIR_PATH"
+
+            # Optionally set it as an environment variable for later steps
+            echo "DIR_PATH=$DIR_PATH" >> $GITHUB_ENV
+          fi
+
+      # - name: Find Relative Path of Specified File
+      #   run: |
+      #     BASE_DIR="base"  # Change this to your base directory
+      #     SPECIFIC_FILE="new.json"  # Change this to your specific file name
+
+      #     echo "Searching for '$SPECIFIC_FILE' in directories under '$BASE_DIR':"
         
 
-          # Use find to search for the specific file and print relative paths
-          RELATIVE_PATH=$(find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" | sed "s|^$BASE_DIR/||" | head -n 1)
-          echo $RELATIVE_PATH
+      #     # Use find to search for the specific file and print relative paths
+      #     find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" | sed "s|^$BASE_DIR/||"  # Print relative paths
 
-      # # Use find to search for the specific file and print relative paths
-      # find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" | sed "s|^$BASE_DIR/||"  # Print relative paths
+        # Use find to search for the specific file and print relative paths
+          # RELATIVE_PATH=$(find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" | sed "s|^$BASE_DIR/||" | head -n 1)
+          # echo $RELATIVE_PATH
       # - name: Get Relative Paths of Directories Excluding Last Level
       #   run: |
       #     BASE_DIR="base"  # Change this to your base directory
