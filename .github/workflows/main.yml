@@ -43,19 +43,7 @@ jobs:
           echo "Created zip file: $ZIP_NAME"
 
 
-      - name: Unzip the Zipped File
-        run: |
-          cd ../../
-          ZIP_PATH="version_archive.zip"  # Path to the zip file
-          UNZIP_DIR="unzipped_version"  # Directory to unzip into
-
-          echo "Unzipping '$ZIP_PATH' into '$UNZIP_DIR'..."
-
-          mkdir -p "$UNZIP_DIR"  # Create the unzip directory if it doesn't exist
-          unzip -o "$ZIP_PATH" -d "$UNZIP_DIR"  # Unzip the file into the specified directory
-
-          echo "Unzipped contents:"
-          ls "$UNZIP_DIR"  # List the contents of the unzipped directory
+    
      
 
       # - name: Find Relative Directory Paths of Specific File perfectly  working code 
