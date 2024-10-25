@@ -26,11 +26,14 @@ jobs:
       - name : checkout
         uses: actions/checkout@v4
 
-      - name: Get Modified Directories
+      - name: Get Recently Modified Directories
         id: get_modified_dirs
         run: |
-          # Get the list of modified directories
-          MODIFIED_DIRS=$(git diff --name-only HEAD^ HEAD | grep '/' | sed 's|/[^/]*$||' | sort -u)
+          # Get the list of modified files in the latest commit
+          MODIFIED_FILES=$(git diff --name-only HEAD^ HEAD)
+
+          # Extract unique directory paths from modified files
+          MODIFIED_DIRS=$(echo "$MODIFIED_FILES" | grep '/' | sed 's|/[^/]*$||' | sort -u)
 
           echo "Modified directories:"
           echo "$MODIFIED_DIRS"
