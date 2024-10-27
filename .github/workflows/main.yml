@@ -59,8 +59,6 @@ jobs:
                     echo "Warning: '$ZIP_NAME' already exists. It will be overwritten."
                 fi
 
-                zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the target directory
-                echo "Created zip file: $ZIP_NAME"
             done
 
 
