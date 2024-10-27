@@ -37,7 +37,7 @@ jobs:
           # Use find to search for the specific file and print its directory paths
             find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u | while read -r DIR_PATH; do
                
-                ls $BASE_DIR
+                ls $DIR_PATH
                 echo "Found directory path: $DIR_PATH"
                 done
         # TARGET_DIR=$(realpath "$DIR_PATH")
