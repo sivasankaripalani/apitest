@@ -62,14 +62,9 @@ jobs:
 
             zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the base directory
             #   echo "Created zip file: $ZIP_NAME"
-           #     UNZIP_DIR="unzipped_version"  # Directory to unzip into
-            echo "Unzipping '$ZIP_NAME' into '$UNZIP_DIR'..."
-
-            mkdir -p "$UNZIP_DIR"  # Create the unzip directory if it doesn't exist
-            unzip -o "$ZIP_NAME" -d "$UNZIP_DIR"  # Unzip the file into the specified directory
-
-            echo "Unzipped contents:"
-            ls "$UNZIP_DIR"  # List the contents of the unzipped directory
+            # Unzip and list contents of the zip file
+            echo "Unzipping '$ZIP_NAME' to list its contents..."
+            unzip -l "$ZIP_NAME"  # List contents of the zip file
              # Change back to the original directory
               cd "$original_dir" || { echo "Error: Failed to return to original directory '$original_dir'."; exit 1; }
             done
