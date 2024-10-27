@@ -39,7 +39,7 @@ jobs:
             echo "Found directory path: $DIR_PATH"
             TARGET_DIR=$DIR_PATH
             ZIP_NAME="portal.zip"  # Name for the zip file
-
+            find . -name "portal.zip" -print -quit
             echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
 
             # Change to the target directory and zip its contents
