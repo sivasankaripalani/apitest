@@ -37,30 +37,32 @@ jobs:
           # Use find to search for the specific file and print its directory paths
             find "$BASE_DIR" -type f -name "$SPECIFIC_FILE" -exec dirname {} \; | sort -u | while read -r DIR_PATH; do
                 cd $BASE_DIR
+                ls $BASE_DIR
                 echo "Found directory path: $DIR_PATH"
-                TARGET_DIR=$(realpath "$DIR_PATH")
-             
-                ZIP_NAME="portal.zip"  # Name for the zip file
-                
-                # Check if the target directory exists
-                if [[ ! -d "$TARGET_DIR" ]]; then
-                
-                    echo "Error: Target directory '$TARGET_DIR' does not exist."
+                done
+        # TARGET_DIR=$(realpath "$DIR_PATH")
+      
+        # ZIP_NAME="portal.zip"  # Name for the zip file
+        
+        # # Check if the target directory exists
+        # if [[ ! -d "$TARGET_DIR" ]]; then
+        
+        #     echo "Error: Target directory '$TARGET_DIR' does not exist."
 
-                    continue
-                fi
+        #     continue
+        # fi
 
-                echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
-                
-                # Change to the target directory and zip its contents
-                cd "$TARGET_DIR" || { echo "Error: Failed to change directory to '$TARGET_DIR'."; continue; }
-                
-                # Check if the zip file already exists
-                if [[ -e "$ZIP_NAME" ]]; then
-                    echo "Warning: '$ZIP_NAME' already exists. It will be overwritten."
-                fi
+        # echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
+        
+        # # Change to the target directory and zip its contents
+        # cd "$TARGET_DIR" || { echo "Error: Failed to change directory to '$TARGET_DIR'."; continue; }
+        
+        # # Check if the zip file already exists
+        # if [[ -e "$ZIP_NAME" ]]; then
+        #     echo "Warning: '$ZIP_NAME' already exists. It will be overwritten."
+        # fi
 
-            done
+          
 
 
         # # Use find to search for the specific file and print its directory paths
