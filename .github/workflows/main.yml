@@ -37,7 +37,8 @@ jobs:
           # Use find to search for the specific file and print its directory paths
            find "$BASE_DIR" \( -type d -name "content" -o -type d -name "static" -o -type f -name "$SPECIFIC_FILE" \) -exec dirname {} \; | sort -u | while read -r DIR_PATH; do
            TARGET_DIR=$(realpath "$DIR_PATH")
-          echo "DIR path '$DIR_PATH'"
+           echo "DIR path '$DIR_PATH'"
+           done
       # ZIP_NAME="portal.zip"  # Name for the zip file
       
       # # Check if the target directory exists
