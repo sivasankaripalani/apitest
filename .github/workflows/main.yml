@@ -7,8 +7,12 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "feature" ]
+    paths:
+      - 'base/**'  
   pull_request:
     branches: [ "feature" ]
+    paths:
+      - 'base/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,38 +42,38 @@ jobs:
            find "$BASE_DIR" \( -type d -name "content" -o -type d -name "spec" -o -type d -name "static" -o -type f -name "$SPECIFIC_FILE" \) -exec dirname {} \; | sort -u | while read -r DIR_PATH; do
            TARGET_DIR=$(realpath "$DIR_PATH")
            echo "DIR path '$DIR_PATH'"
-           done
-      # ZIP_NAME="portal.zip"  # Name for the zip file
-      
-      # # Check if the target directory exists
-      # if [[ ! -d "$TARGET_DIR" ]]; then
-      
-      #     echo "Error: Target directory '$TARGET_DIR' does not exist."
+           
+          ZIP_NAME="portal.zip"  # Name for the zip file
+          
+          # Check if the target directory exists
+          if [[ ! -d "$TARGET_DIR" ]]; then
+          
+              echo "Error: Target directory '$TARGET_DIR' does not exist."
 
-      #     continue
-      # fi
+              continue
+          fi
 
 
-      # echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
-      #   # Save the current directory
-      #   original_dir=$(pwd)
-      
-      # # Change to the target directory and zip its contents
-      # cd "$TARGET_DIR" || { echo "Error: Failed to change directory to '$TARGET_DIR'."; continue; }
-      
-      # # Check if the zip file already exists
-      # if [[ -e "$ZIP_NAME" ]]; then
-      #     echo "Warning: '$ZIP_NAME' already exists. It will be overwritten."
-      # fi
+          echo "Zipping contents of '$TARGET_DIR' into '$ZIP_NAME'..."
+            # Save the current directory
+            original_dir=$(pwd)
+          
+          # Change to the target directory and zip its contents
+          cd "$TARGET_DIR" || { echo "Error: Failed to change directory to '$TARGET_DIR'."; continue; }
+          
+          # Check if the zip file already exists
+          if [[ -e "$ZIP_NAME" ]]; then
+              echo "Warning: '$ZIP_NAME' already exists. It will be overwritten."
+          fi
 
-      # zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the base directory
-      # #   echo "Created zip file: $ZIP_NAME"
-      # # Unzip and list contents of the zip file
-      # echo "Unzipping '$ZIP_NAME' to list its contents..."
-      # unzip -l "$ZIP_NAME"  # List contents of the zip file
-      #  # Change back to the original directory
-      #   cd "$original_dir" || { echo "Error: Failed to return to original directory '$original_dir'."; exit 1; }
-      # done
+          zip -r "$ZIP_NAME" ./*  # Zip contents and place it in the base directory
+          #   echo "Created zip file: $ZIP_NAME"
+          # Unzip and list contents of the zip file
+          echo "Unzipping '$ZIP_NAME' to list its contents..."
+          unzip -l "$ZIP_NAME"  # List contents of the zip file
+           # Change back to the original directory
+            cd "$original_dir" || { echo "Error: Failed to return to original directory '$original_dir'."; exit 1; }
+          done
 
         # ls $DIR_PATH
         #       echo "Found directory path: $DIR_PATH"
